@@ -7,6 +7,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
     var loseZone = SKSpriteNode()
+    var removedBricks = 0
+    var score = 0
+    var lives = 3
+    var playingGame = false
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -14,8 +18,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createBackground()
         makeBall()
         makePaddle()
-        makeBrick()
+        makeBricks()
         makeLoseZone()
+        resetGame()
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.applyImpulse(CGVector(dx: 3, dy: 5))
     }
@@ -99,7 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func makeBrick() {
+    func makeBricks() {
         brick = SKSpriteNode(color: .blue, size: CGSize(width: 50, height: 20))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
         brick.name = "brick"
@@ -115,6 +120,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         loseZone.physicsBody = SKPhysicsBody(rectangleOf: loseZone.size)
         loseZone.physicsBody?.isDynamic = false
         addChild(loseZone)
+    }
+    func resetGame() {
+        ball.removeFromParent()
+        paddle.removeFromParent()
+        makeBall()
+        makePaddle()
+        makeBricks()
+        
     }
 }
 
