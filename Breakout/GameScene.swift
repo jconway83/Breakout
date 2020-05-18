@@ -19,6 +19,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.applyImpulse(CGVector(dx: 3, dy: 5))
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            paddle.position.x = location.x
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            paddle.position.x = location.x
+        }
+    }
+    
     func createBackground() {
         let stars = SKTexture(imageNamed: "Stars")
         for i in 0...1 {
@@ -80,12 +95,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeLoseZone() {
-       loseZone = SKSpriteNode(color: .red, size: CGSize(width: frame.width, height: 50))
-       loseZone.position = CGPoint(x: frame.midX, y: frame.minY + 25)
-       loseZone.name = "loseZone"
-       loseZone.physicsBody = SKPhysicsBody(rectangleOf: loseZone.size)
-       loseZone.physicsBody?.isDynamic = false
-       addChild(loseZone)
+        loseZone = SKSpriteNode(color: .red, size: CGSize(width: frame.width, height: 50))
+        loseZone.position = CGPoint(x: frame.midX, y: frame.minY + 25)
+        loseZone.name = "loseZone"
+        loseZone.physicsBody = SKPhysicsBody(rectangleOf: loseZone.size)
+        loseZone.physicsBody?.isDynamic = false
+        addChild(loseZone)
     }
 }
 
